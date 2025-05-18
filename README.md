@@ -1,139 +1,103 @@
-# NerdFetch
- A POSIX \*nix (Linux, macOS, Android, BSD, etc) fetch script using Nerdfonts (and others)
+# NerdFetch-C
+C-реализация NerdFetch - программы для отображения информации о системе \*nix с использованием Nerdfonts (и других шрифтов)
 
-*Nerdfont*
+## О программе
+NerdFetch-C - это порт популярного shell-скрипта [NerdFetch](https://github.com/ThatOneCalculator/NerdFetch) на язык C. Он обеспечивает такую же функциональность и эстетику, но с преимуществами компилируемой программы.
 
-![Screenshot](https://github.com/ThatOneCalculator/NerdFetch/assets/44733677/37ea2a01-80e1-457b-b922-89cc708c527e)
+## Скриншоты
+*Nerdfont (По умолчанию)*
+![Скриншот](https://github.com/ThatOneCalculator/NerdFetch/assets/44733677/37ea2a01-80e1-457b-b922-89cc708c527e)
 
 *Phosphor Bold*
-
 ![Phosphor](https://github.com/ThatOneCalculator/NerdFetch/assets/44733677/07d2cc29-5a58-4a00-8a52-95ec2032988b)
 
 *Cozette*
-
 ![Cozette](https://github.com/ThatOneCalculator/NerdFetch/assets/44733677/574e8417-adee-45cd-9a4e-68661240f458)
 
-### Dependencies
+## Зависимости
+- [Любой шрифт Nerdfonts](https://www.nerdfonts.com/font-downloads), [Cozette](https://github.com/slavfox/Cozette), или [Phosphor](https://github.com/phosphor-icons/homepage/releases/tag/v2.0.0)
+- Компилятор C (GCC или Clang)
+- Система сборки Meson
+- Сборочный бэкенд Ninja
 
-- [Any Nerdfonts font](https://www.nerdfonts.com/font-downloads), [Cozette](https://github.com/slavfox/Cozette), or [Phosphor](https://github.com/phosphor-icons/homepage/releases/tag/v2.0.0)
-- POSIX-compliant shell
-- Anything but Windows
+## Сборка и установка
 
-### To install and run
+### Предварительные требования
+Убедитесь, что у вас установлены зависимости для сборки:
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/nerdfetch.svg)](https://repology.org/project/nerdfetch/versions)
-
-#### How to switch fonts
-
-- Nerdfonts is used by default
-- Use `-c` for Cozette
-- Use `-p` for Phosphor
-- Use `-e` for Emojis
-
-#### [Arch Linux (AUR)](https://aur.archlinux.org/packages/nerdfetch/)
-
+#### Arch Linux
 ```sh
-yay -S nerdfetch # -git
-nerdfetch
-```
-Make sure to replace `yay` with whatever AUR helper you use.
-
-#### [macOS (homebrew)](https://formulae.brew.sh/formula/nerdfetch)
-
-```sh
-brew install nerdfetch
-nerdfetch
+sudo pacman -S gcc meson ninja
 ```
 
-#### [Nix](https://search.nixos.org/packages?show=nerdfetch)
-
+#### Debian/Ubuntu
 ```sh
-nix-shell -p nerdfetch
-nerdfetch
-``` 
-
-#### [Gentoo (GURU)](https://gpo.zugaina.org/Overlays/guru/app-misc/nerdfetch)/[LiGurOS](https://gitlab.com/liguros/liguros-repo/-/tree/stable/app-misc/nerdfetch)
-
-Add the GURU overlay: <https://wiki.gentoo.org/wiki/Project:GURU/Information_for_End_Users> (*Not needed for LiGurOS*)
-
-```sh
-emerge nerdfetch
-nerdfetch
-```
-#### [yiffOS](https://packages.yiffos.gay/nerdfetch)
-
-```sh
-bulge install nerdfetch
-nerdfetch
+sudo apt install build-essential meson ninja-build
 ```
 
-#### [BirbOS](https://github.com/birb-linux/BirbOS-packages/tree/dev/nerdfetch)
+#### Fedora
+```sh
+sudo dnf install gcc meson ninja-build
+```
+
+### Сборка и установка
+```sh
+# Клонирование репозитория
+git clone https://github.com/AnmiTaliDev/nerdfetch-c.git
+cd nerdfetch-c
+
+# Настройка директории сборки
+meson setup builddir
+cd builddir
+
+# Компиляция
+meson compile
+
+# Установка (опционально)
+sudo meson install
+```
+
+### Запуск без установки
+```sh
+./nerdfetch
+```
+
+## Использование
 
 ```sh
-sudo birb nerdfetch
+# По умолчанию (Nerdfonts)
 nerdfetch
+
+# С использованием шрифта Cozette
+nerdfetch -c
+
+# С использованием шрифта Phosphor
+nerdfetch -p
+
+# С использованием Emoji
+nerdfetch -e
+
+# Показать версию
+nerdfetch -v
+
+# Показать справку
+nerdfetch -h
 ```
 
-#### Manually
+## Особенности
+- Кроссплатформенная поддержка различных \*nix систем
+- Более быстрое выполнение в виде компилируемого бинарного файла
+- Низкое потребление ресурсов
+- Такой же внешний вид, как и у оригинального shell-скрипта
+- Поддержка POSIX-совместимых систем
 
-Copy-paste this into your terminal:
-
-```sh
-sudo curl -fsSL https://raw.githubusercontent.com/ThatOneCalculator/NerdFetch/main/nerdfetch -o /usr/bin/nerdfetch
-sudo chmod +x /usr/bin/nerdfetch
-nerdfetch
-```
-
-#### Android with Termux
-
-Copy-paste this into Termux:
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/ThatOneCalculator/NerdFetch/main/nerdfetch -o /data/data/com.termux/files/usr/bin/nerdfetch
-chmod a+x /data/data/com.termux/files/usr/bin/nerdfetch
-nerdfetch
-```
-
-#### Run once
-
-Note that this will ***not*** install the program.
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/ThatOneCalculator/NerdFetch/main/nerdfetch | sh
-```
-
-### Features
-
-- Strong cross-OS compatability
-- Not bloated
-- Portable
-- POSIX
-
-### OSes tested
-
-- Debian based Linux
-- Ubuntu based Linux
-- Arch based Linux
-- Gentoo based Linux
-- RedHat based Linux
-- OpenSUSE based Linux
-- Bedrock Linux
-- Alpine Linux
-- KISS Linux
-- Void Linux
-- Exherbo Linux
-- NixOS Linux
-- Solus Linux
-- yiffOS Linux
-- Slackware Linux
-- BirbOS Linux
+## Поддерживаемые операционные системы
+- Linux (различные дистрибутивы)
+- BSD-варианты (FreeBSD, OpenBSD, NetBSD)
 - macOS
-- Android
-- FreeBSD
-- OpenBSD
-- NetBSD
-- OpenWrt
 
-### Known issue(s)
+## Оригинальный проект
+Это C-порт [NerdFetch](https://github.com/ThatOneCalculator/NerdFetch) от ThatOneCalculator.
 
-- `nsh` is currently unsupported (https://github.com/ThatOneCalculator/NerdFetch/issues/46)
+## Лицензия
+Этот проект лицензирован на тех же условиях, что и оригинальный NerdFetch.
